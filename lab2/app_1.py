@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import matplotlib.pyplot as plt
 import numpy as np
 import math
@@ -18,10 +16,9 @@ for i in x:
     y.append(f(i))
 
 # Построение графика
-plt.plot(x, y)
+plt.plot(x, y, linewidth=2)
 plt.xlabel('x')
-plt.ylabel('f(x)')
+plt.ylabel('y')
 plt.title('График функции f(x)')
 plt.grid()
 plt.show()
-
