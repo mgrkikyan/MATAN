@@ -8,7 +8,7 @@ def g(x):
     return np.log(np.sin(x))
 
 # Создание массива значений x
-x = np.linspace(0, np.pi, 300)
+x = np.linspace(0.000000000000000001, np.pi, 300)
 
 # Вычисление значений y для каждого значения x
 y = g(x)
@@ -17,6 +17,7 @@ y = g(x)
 plt.plot(x, y)
 plt.xlabel('x')
 plt.ylabel('y')
+plt.ylim(-35, 1)
 plt.title('График функции g(x)')
 plt.grid()
 plt.show()

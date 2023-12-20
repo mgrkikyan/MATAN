@@ -61,7 +61,7 @@ $f(x) = \sqrt{5 + 4x - x^2}$
 
 Найдем область определения:
 
-$5 + 4x + x^2 \geq 0$
+$5 + 4x - x^2 \geq 0$
 
 $x^2 - 4x - 5 \leq 0$
 
@@ -69,7 +69,7 @@ $D = b^2 - 4ac = 16 + 20 = 36 = 6^2$
 
 $x_{1, 2} = \frac{-b \pm \sqrt{D}}{2a} = \frac{4 \pm 6}{2} = -1 ; 5$
 
-$(x + 1) * (x - 5) \leq 0$ 
+$(x + 1) (x - 5) \leq 0$ 
 
 Область определения:
 
@@ -135,20 +135,21 @@ from math import *
 from sympy import *
 
 # Определение функции
-def f(x):
+def g(x):
     return np.log(np.sin(x))
 
 # Создание массива значений x
-x = np.linspace(0, np.pi, 300)
+x = np.linspace(0.000000000000000001, np.pi, 300)
 
 # Вычисление значений y для каждого значения x
-y = f(x)
+y = g(x)
 
 # Построение графика
 plt.plot(x, y)
 plt.xlabel('x')
-plt.ylabel('f(x)')
-plt.title('График функции f(x)')
+plt.ylabel('y')
+plt.ylim(-35, 1)
+plt.title('График функции g(x)')
 plt.grid()
 plt.show()
 ```
@@ -169,31 +170,29 @@ plt.show()
 
 $\lim\limits_{x\rightarrow0}{(1 + 7x)^{3ctgx}}$ 
 
-Для начала попробуем преобразовать показатель:
+Второй замечательный предел выглядит так:
 
-$\lim\limits_{x\rightarrow0}{{3ctgx}} =>$ нет предела
+$\lim\limits_{u\rightarrow0}{(1 + u)^{\frac{1}{u}}} = e$
 
-$3ctgx = 3 * \frac{cosx}{sinx}$
+Вычисляем:
 
-$\lim\limits_{x\rightarrow0}{cosx} = 1$ 
+$\lim\limits_{x\rightarrow0}{[(1 + 7x)^{\frac{1}{7x}}]^{21xctgx}}$
 
-По 1-му замечательному пределу находим предел синуса:
+$e^{\lim\limits_{x\rightarrow0}{(21xctgx)}}$ 
 
-$\lim\limits_{x\rightarrow0}{sinx} = \lim\limits_{x\rightarrow0}\frac{x*sinx}{x} = x$
+$\lim\limits_{x\rightarrow0}{(21xctgx)} = \lim\limits_{x\rightarrow0}{(21x\frac{cosx}{sinx})}$
+
+По первому замечательному пределу:
+
+$\lim\limits_{x\rightarrow0}{\frac{x}{sinx}} = 1$
 
 Далее:
 
-$\lim\limits_{x\rightarrow0}{(1 + 7x)^{3*\frac{1}{x}}}= \lim\limits_{x\rightarrow0}{(e^{ln(1 + 7x)})^\frac{3}{x}} = \lim\limits_{x\rightarrow0}{e^{\frac{3}{x}*ln(1 + 7x)}}$ 
+$\lim\limits_{x\rightarrow0}{21cosx} = 21$
 
-С помощью следствия второго замечательного предела, попытаемся избавиться от логарифма в показателе:
+Отсюда следует:
 
-$\lim\limits_{x\rightarrow0}{\frac{ln(1+f(x))}{f(x)}} = 1$
-
-$\lim\limits_{x\rightarrow0}{ln(1 + 7x)} = \lim\limits_{x\rightarrow0}{\frac{ln(1+7x)*7x}{7x}} = 7x$
-
-Вычислим же наконец предел:
-
-$\lim\limits_{x\rightarrow0}{e^{\frac{3}{x}*7x}} = \lim\limits_{x\rightarrow0}{e^{21}} = e^{21}$
+$\lim\limits_{x\rightarrow0}{(1 + 7x)^{3ctgx}} = e^{21}$ 
 
 ОТВЕТ: $e^{21}$
 
@@ -204,18 +203,21 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sympy as smp
 
-x = smp.symbols('x')
+x = smp.Symbol('x')
 
 # Объявляем функцию
 def f(x):
-    return (1 + 7 * x) * (3 * smp.cot(x))
+    return (1 + 7 * x) ** (3 * smp.cot(x))
+
 
 def plot_points():
-    x_values = np.linspace(0.1, 10, 400)  # начинаем с 0.1, чтобы избежать деления на ноль
-    y_values = [f(n) for n in x_values]
+
+    x_values1 = np.linspace(0.0000000000001, 0.1, 100)  
+    y_values1 = [f(n) for n in x_values1]
 
     # Строим график
-    plt.plot(x_values, y_values, label='f(x)')
+    # plt.plot(x_values, y_values, label='f(x)')
+    plt.plot(x_values1, y_values1, label='f(x)')
     
     # Вычисление предела
     lim = smp.limit(f(x), x, 0)
@@ -225,12 +227,21 @@ def plot_points():
     
     plt.xlabel('x')
     plt.ylabel('y')
+    plt.xlim(-0.1, 0.1)
     plt.title('График функции')
     plt.legend()
     plt.grid()
     plt.show()
 
 plot_points()
+
+
+# Определение функции
+f = (1 + 7 * x) ** (3 * smp.cot(x))
+
+# Вычисление предела
+lim = smp.limit(f, x, 0)
+print(f'Limit: {lim}')
 
 
 # Определение функции
@@ -265,7 +276,7 @@ $\lim\limits_{x\rightarrow{x_0-0}}{xsin\frac{1}{x}} = 0$
 
 Теперь определим значение функции в точке $x_0$:
 
-$f(0) = 0 * sin\frac{1}{0}$ - функция в данной точке не определена
+$f(x_0) = x_0  sin\frac{1}{x_0}$ - функция в данной точке не определена
 
 Пределы слева и справа равны, а функция не определена. Отсюда следует, что данная точка является точкой устранимого разрыва $I$-го рода.
 
@@ -289,7 +300,7 @@ y0 = f(x0)
 
 # Построение графика
 plt.plot(x0, y0)
-plt.axvline(x=0, color='red', linestyle='--', label='Точка разрыва')
+plt.axvline(x=0, color='red', linestyle='--', label='x=0')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('График функции f(x) = x * sin(1/x)')
@@ -316,11 +327,11 @@ print(f'Предел справа в точке x=0: {lim_right}')
 
 ![Image text](график2.4.png)
 
-<p style="text-align: center;">Рис. 2.2. Иллюстрация решения задачи.</p>
+<p style="text-align: center;">Рис. 2.3. Иллюстрация решения задачи.</p>
 
 ![Image text](вывод2.4.png)
 
-<p style="text-align: center;">Рис. 2.2. Вывод программы в терминале.</p>
+<p style="text-align: center;">Рис. 2.3. Вывод программы в терминале.</p>
 
 
 

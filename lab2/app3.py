@@ -16,7 +16,7 @@ y0 = f(x0)
 
 # Построение графика
 plt.plot(x0, y0)
-plt.axvline(x=0, color='red', linestyle='--', label='Точка разрыва')
+plt.axvline(x=0, color='red', linestyle='--', label='x=0')
 plt.xlabel('x')
 plt.ylabel('y')
 plt.title('График функции f(x) = x * sin(1/x)')
