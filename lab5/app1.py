@@ -1,27 +1,28 @@
 import sympy
 from sympy.abc import x
+import numpy as np
 f = 1 / (x ** 2 + 2)
-print(sympy.integrate(f, (x, 0, 1)))
-
+integral = sympy.integrate(f, (x, 0, 1))
+num_val = integral.evalf()
+print(integral)
+print(f"Приближенное значение: {num_val}")
 
 # Интегральная сумма
+def f(x):
+    return 1/(x**2 + 2)  
+
 import numpy as np
 
 def f(x):
-    return 1/(x**2 + 2)  # Пример функции, которую мы интегрируем
+    return 1/(x**2 + 2)
 
-# Интегральная сумма 
-def integral_sum(a, b, n):
-    dx = (b - a) / n
-    x = np.linspace(a, b, n+1)
-    sum = 0
-    for i in range(n):
-        sum += f(x[i]) * dx
-    return sum
+a = 0
+b = 1
+n = 7
 
-a = 0  # Нижний предел интегрирования
-b = 1  # Верхний предел интегрирования
-n = 7  # Количество отрезков разбиения
+dx = (b - a) / n
+x_points = [a + dx * (k + 0.5) for k in range(n)]
 
-result = integral_sum(a, b, n)
-print(result)
+sigma = sum(f(x) * dx for x in x_points)
+print(f"Интегральная сумма: {sigma}")
+

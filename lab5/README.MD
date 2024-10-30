@@ -69,31 +69,31 @@
 ```python
 import sympy
 from sympy.abc import x
+import numpy as np
 f = 1 / (x ** 2 + 2)
-print(sympy.integrate(f, (x, 0, 1)))
-
+integral = sympy.integrate(f, (x, 0, 1))
+num_val = integral.evalf()
+print(integral)
+print(f"Приближенное значение: {num_val}")
 
 # Интегральная сумма
+def f(x):
+    return 1/(x**2 + 2)  
+
 import numpy as np
 
 def f(x):
-    return 1/(x**2 + 2)  # Пример функции, которую мы интегрируем
+    return 1/(x**2 + 2)
 
-# Интегральная сумма 
-def integral_sum(a, b, n):
-    dx = (b - a) / n
-    x = np.linspace(a, b, n+1)
-    sum = 0
-    for i in range(n):
-        sum += f(x[i]) * dx
-    return sum
+a = 0
+b = 1
+n = 7
 
-a = 0  # Нижний предел интегрирования
-b = 1  # Верхний предел интегрирования
-n = 7  # Количество отрезков разбиения
+dx = (b - a) / n
+x_points = [a + dx * (k + 0.5) for k in range(n)]
 
-result = integral_sum(a, b, n)
-print(result)
+sigma = sum(f(x) * dx for x in x_points)
+print(f"Интегральная сумма: {sigma}")
 ```
 
 График функции:
@@ -101,45 +101,34 @@ print(result)
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Функция под интегралом
 def f(x):
-    return 1 / (x ** 2 + 2)
+    return 1 / (x * (np.log(x) ** 2 + 2))
 
 # Границы интегрирования и количество разбиений
-a = 0
+a = 0.1
 b = 1
 n = 7
+
+x_vals = np.linspace(a, b, 400)
+y_vals = f(x_vals)
 
 # Шаг разбиения
 dx = (b - a) / n
 
-# Создаем фигуру и оси
-fig, ax = plt.subplots()
+plt.plot(x_vals, y_vals)  # Добавляем график функции
+plt.title('График функции')
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.grid()
 
-# Генерируем точки для графика функции
-x_vals = np.linspace(a, b, 400)
-y_vals = f(x_vals)
-ax.plot(x_vals, y_vals, label='f(x)', linewidth=2.5)
-
-# Добавляем прямоугольники
 for k in range(1, n+1):
-    # Середина каждого отрезка
     x_k = a + (k - 0.5) * dx
-    # Значение функции в середине отрезка
     f_x_k = f(x_k)
-    # Цвет прямоугольника в зависимости от знака f(x_k)
     color = 'blue' if f_x_k < 0 else '#F39C12'
-    # Добавляем прямоугольник
-    ax.add_patch(plt.Rectangle((x_k - dx/2, 0), dx, f_x_k, color=color, alpha=0.5))
+    rect = plt.Rectangle((x_k - dx/2, 0), dx, f_x_k, color=color, alpha=0.5)
+    plt.gca().add_patch(rect)
 
-# Настройки графика
-ax.set_xlabel('x')
-ax.set_ylabel('f(x)')
-ax.set_title('График')
-ax.legend()
-
-# Показываем график
-plt.show()
+plt.show()  # Отображаем график с прямоугольниками
 ```
 
 #### Иллюстрация решения
